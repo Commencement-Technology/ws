@@ -6,6 +6,7 @@
     "format": "yarn prettier --check 'src/**/*.ts' 'tests/**/*.ts'",
     "format:fix": "yarn prettier --write 'src/**/*.ts' 'tests/**/*.ts'",
     "lint": "eslint ./src/*",
+    "dev": "react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
@@ -13,6 +14,7 @@
   "dependencies": {
     "core-js": "^3.36.0",
     "cross-env": "5.0.5",
+    "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0",
@@ -28,5 +30,17 @@
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

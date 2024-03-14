@@ -4,11 +4,15 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response): Response => {
+app.get("/", (_: Request, res: Response): Response => {
   return res.send("Hello, World!");
 });
 
-const start = async (): Promise<void> => {
+app.get("/messages", (req: Request, res: Response): Response => {
+  return res.send("Hello, World!");
+});
+
+const start = (): void => {
   try {
     app.listen(3000, () => {
       console.log("Server started on port 3000");

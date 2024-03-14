@@ -12,13 +12,13 @@
     "npm": ">=8.6.0"
   },
   "scripts": {
-    "build": "yarn workspaces foreach -W --include client --include server -ptv run build",
-    "check-types": "yarn workspaces foreach -ptv run check-types",
+    "build": "yarn workspaces foreach -A -ptv run build",
+    "check-types": "yarn workspaces foreach -A -ptv run check-types",
     "format": "yarn prettier --check 'src/**/*.ts' 'tests/**/*.ts'",
     "format:fix": "yarn prettier --write 'src/**/*.ts' 'tests/**/*.ts'",
-    "lint": "yarn workspaces foreach -v run lint",
-    "dev": "yarn workspaces foreach --include client --include server -piv run dev",
-    "start": "yarn workspaces foreach --include client --include server -piv run start"
+    "lint": "yarn workspaces foreach -A -v run lint",
+    "dev": "yarn workspaces foreach -A -piv run dev",
+    "start": "yarn workspaces foreach -A -piv run start"
   },
   "repository": {
     "type": "git",
