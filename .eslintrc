@@ -3,39 +3,28 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
   ],
-  "ignorePatterns": [
-    "spectaql/*.ts",
-    "db/*"
-  ],
+  "ignorePatterns": ["spectaql/*.ts", "db/*"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
-    "project": [
-      "./tsconfig.json"
-    ]
+    "project": ["./tsconfig.json"],
   },
   "rules": {
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
         "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_"
-      }
-    ]
+        "varsIgnorePattern": "^_",
+      },
+    ],
   },
   "overrides": [
     {
-      "files": [
-        "tests/**"
-      ],
-      "plugins": [
-        "jest"
-      ],
-      "extends": [
-        "plugin:jest/recommended"
-      ],
+      "files": ["tests/**"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended"],
       "rules": {
         // turn the original rule off *only* for test files
         "@typescript-eslint/unbound-method": "off",
@@ -44,19 +33,16 @@
         "jest/expect-expect": [
           "error",
           {
-            "assertFunctionNames": [
-              "expect",
-              "chaiExpect"
-            ]
-          }
-        ]
-      }
+            "assertFunctionNames": ["expect", "chaiExpect"],
+          },
+        ],
+      },
     },
     {
-      "files": [
-        "src/**",
-        "tests/**"
-      ],
-    }
-  ]
+      "files": ["src/**", "tests/**"],
+      "rules": {
+        "no-console": "error",
+      },
+    },
+  ],
 }

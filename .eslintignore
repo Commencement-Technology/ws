@@ -1,6 +1,1 @@
-dist/
-**/dist/
-_templates/
 .github/
-build/
-eslint-plugin-convert/
