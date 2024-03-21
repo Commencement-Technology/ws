@@ -1,5 +1,7 @@
 CREATE TABLE messages
 (
     id uuid PRIMARY KEY,
-    content TEXT
+    content TEXT,
+    created TIMESTAMP NOT NULL,
+    userId INTEGER
 );

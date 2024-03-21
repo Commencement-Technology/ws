@@ -13,9 +13,10 @@ app.use(express.json());
 app.use(cors());
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-app.get('/messages', async (_: Request, res: Response) => {
+app.get('/messages', async (req: Request, res: Response) => {
+  const { latest } = req.query as { latest: string | undefined };
   const dbPool = await db.connect();
-  const messages = await getMessages({ db: dbPool });
+  const messages = await getMessages({ db: dbPool }, latest);
   res.send(messages);
 });
 
@@ -23,7 +24,10 @@ app.get('/messages', async (_: Request, res: Response) => {
 app.post('/message/new', async (req: Request, res: Response) => {
   const { message } = req.body as { message: string };
   const dbPool = await db.connect();
-  const messageCreated = await createMessage({ id: uuid(), content: message }, { db: dbPool });
+  const messageCreated = await createMessage(
+    { id: uuid(), content: message, created: new Date().toISOString() },
+    { db: dbPool },
+  );
   messageCreated ? res.send('success') : res.send('failed');
 });
 
@@ -37,10 +41,7 @@ const start = (): void => {
       ws.on('error', console.error);
 
       ws.on('message', function message(data) {
-        console.log('received: ', data);
-
         if (String(data) === 'new') {
-          console.log('SENDING REFETCH BACK...');
           wss.clients.forEach(function each(client) {
             if (client.readyState === WebSocket.OPEN) {
               client.send('refetch');

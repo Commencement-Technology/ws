@@ -3,10 +3,9 @@ import { Context, Message } from './messages.controller';
 
 export const insertMessage = async (message: Message, context: Context): Promise<boolean> => {
   try {
-    console.log('INSERT MESSAGE: ', message);
     const createMessage = sql.fragment`
-        INSERT INTO messages (id, content)
-        VALUES (${message.id}, ${message.content});
+        INSERT INTO messages (id, content, created)
+        VALUES (${message.id}, ${message.content}, ${message.created});
       `;
 
     await context.db.query(createMessage.sql, [...createMessage.values]);
@@ -17,10 +16,15 @@ export const insertMessage = async (message: Message, context: Context): Promise
   }
 };
 
-export const allMessages = async (context: Context): Promise<Message[]> => {
+export const allMessages = async (context: Context, fromTimestamp?: string): Promise<Message[]> => {
   try {
-    const all = await context.db.query(`SELECT * FROM messages`);
-    return all.rows as Message[];
+    const query = fromTimestamp
+      ? `SELECT * FROM messages WHERE created > '${new Date(Number(fromTimestamp) * 1000).toISOString()}'`
+      : `SELECT * FROM messages`;
+
+    console.log('QUERY USING: ', query);
+    const messages = await context.db.query(query);
+    return messages.rows as Message[];
   } catch (error) {
     console.error(error);
     return [];
