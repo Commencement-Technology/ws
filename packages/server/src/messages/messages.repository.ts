@@ -3,6 +3,7 @@ import { Context, Message } from './messages.controller';
 
 export const insertMessage = async (message: Message, context: Context): Promise<boolean> => {
   try {
+    console.log('INSERT MESSAGE: ', message);
     const createMessage = sql.fragment`
         INSERT INTO messages (id, content)
         VALUES (${message.id}, ${message.content});

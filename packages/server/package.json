@@ -10,7 +10,6 @@
     "format": "yarn prettier --check 'src/**/*.ts' 'tests/**/*.ts'",
     "format:fix": "yarn prettier --write 'src/**/*.ts' 'tests/**/*.ts'",
     "lint": "yarn eslint ./src/*",
-    "start": "webpack serve --open --mode=development --config webpack.website.config.js",
     "test": "jest --coverage --verbose"
   },
   "type": "commonjs",
