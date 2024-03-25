@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import { WebSocketServer, WebSocket } from 'ws';
-import { v4 as uuid } from 'uuid';
 import { Message, createMessage, getMessages } from './messages/messages.controller';
 import { Pool } from 'pg';
 import cors from 'cors';
@@ -18,16 +17,6 @@ app.get('/messages', async (_: Request, res: Response) => {
   res.send(messages);
 });
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
-app.post('/message/new', async (req: Request, res: Response) => {
-  const { message } = req.body as { message: string };
-  const messageCreated = await createMessage(
-    { id: uuid(), content: message, created: new Date().toISOString() },
-    { db },
-  );
-  messageCreated ? res.send('success') : res.send('failed');
-});
-
 const start = (): void => {
   try {
     app.listen(4000, () => {
@@ -40,7 +29,6 @@ const start = (): void => {
       ws.on('message', (msg, isBinary) => {
         const msgAsString = msg.toString('utf-8');
         const msgObject = JSON.parse(msgAsString) as Message;
-        console.log('INSIDE ON MESSAGE ON SERVER', msgObject);
         createMessage(msgObject, { db }).catch((e) => console.error(e));
 
         wss.clients.forEach((client) => {
