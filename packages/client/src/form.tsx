@@ -1,34 +1,37 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { ws } from './index';
+import { v4 as uuid } from 'uuid';
+
+const createMessage = (input: string) => ({
+  id: uuid(),
+  content: input,
+  created: new Date().toISOString(),
+});
 
 export const Form = () => {
   const [input, setInput] = useState('');
 
-  const handleClick = async () => {
-    const data = { message: input };
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!input) return;
-    await fetch('http://localhost:4000/message/new', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    ws.send('new');
+    const messageToSend = createMessage(input);
+    ws.send(JSON.stringify(messageToSend));
     setInput('');
   };
 
   return (
     <div>
-      <label htmlFor="message">Message:</label>
-      <input
-        type="text"
-        id="message"
-        name="message"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <button onClick={() => void handleClick()}>Ok</button>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="message">Message:</label>
+        <input
+          type="text"
+          id="message"
+          name="message"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button type="submit">Ok</button>
+      </form>
     </div>
   );
 };

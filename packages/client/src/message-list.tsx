@@ -9,7 +9,6 @@ export interface Message {
 }
 
 export const MessageList = () => {
-  // const [fetchMessages, setFetchMessages] = useState<boolean>(true);
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
@@ -18,7 +17,6 @@ export const MessageList = () => {
       const res = await fetch(`http://localhost:4000/messages`);
       if (!res.ok) throw new Error(res.statusText);
       const response = (await res.json()) as Message[];
-      return response;
       setMessages(response);
     }
 
@@ -31,18 +29,14 @@ export const MessageList = () => {
     //   setMessages([...messages, ...messageResponse.slice(1)]);
     //   setRefetch(false);
     // }
-    // if (messages.length && refetch) {
-    //   getLatestMessages(messages[messages.length - 1]).catch((e) =>
-    //     console.log('CATCH ERROR IN LATEST: ', e),
-    //   );
+
     getAllMessages().catch((e) => console.log(e));
   }, []);
 
-  ws.onmessage = function incoming(e) {
-    console.log('MESSAGE INCOMING...');
-    if (e.data.toString() === 'refetch') {
-      // setFetchMessages(true);
-    }
+  ws.onmessage = (e) => {
+    const msgObject = JSON.parse(e.data as string) as Message;
+    console.log('MESSAGE INCOMING...', msgObject);
+    setMessages([...messages, msgObject]);
   };
 
   return (

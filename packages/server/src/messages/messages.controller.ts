@@ -1,4 +1,4 @@
-import { PoolClient } from 'pg';
+import { Pool } from 'pg';
 import * as MessagesRepository from './messages.repository';
 
 export interface Message {
@@ -9,7 +9,7 @@ export interface Message {
 }
 
 export interface Context {
-  readonly db: PoolClient;
+  readonly db: Pool;
 }
 
 export const createMessage = async (body: Message, ctx: Context): Promise<boolean> =>
