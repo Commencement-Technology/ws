@@ -1,7 +1,7 @@
 import 'core-js';
+import 'normalize.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import 'normalize.css';
 import WebSocket from 'isomorphic-ws';
 import { Form } from './form';
 import { MessageList } from './message-list';
