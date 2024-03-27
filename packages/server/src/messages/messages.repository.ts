@@ -1,5 +1,12 @@
 import { sql } from 'slonik';
-import { Context, Message } from './messages.controller';
+import { Context } from './messages.controller';
+
+export interface Message {
+  readonly id: string;
+  readonly content: string;
+  readonly created: string;
+  readonly userId: string;
+}
 
 export const insertMessage = async (message: Message, context: Context): Promise<boolean> => {
   const pool = await context.db.connect();
@@ -17,7 +24,7 @@ export const insertMessage = async (message: Message, context: Context): Promise
   }
 };
 
-export const allMessages = async (context: Context): Promise<Message[]> => {
+export const getMessages = async (context: Context): Promise<Message[]> => {
   const pool = await context.db.connect();
   try {
     const messages = await pool.query(

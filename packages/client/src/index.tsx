@@ -10,13 +10,8 @@ import { createGlobalStyle } from 'styled-components';
 
 export const ws = new WebSocket('ws://localhost:8080/');
 
-ws.onopen = function open() {
-  console.log('ws connected');
-};
-
-ws.onclose = function close() {
-  console.log('ws disconnected');
-};
+ws.onopen = () => console.log('WebSocket connected');
+ws.onclose = () => console.log('WebSocket disconnected');
 
 const userId = uuid();
 
